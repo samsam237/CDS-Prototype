@@ -1,0 +1,1740 @@
+window.CDS_DB = {
+  "meta": {
+    "version": "4.0-demo",
+    "demoToday": "2026-09-20",
+    "consentMode": "direct",
+    "footer": "Démonstration : toutes les personnes, organisations et attestations sont fictives."
+  },
+  "capabilities": [
+    {
+      "id": "communication",
+      "name": "Communication",
+      "desc": "Exprimer une idée clairement et adapter son message.",
+      "domain": "Relationnel"
+    },
+    {
+      "id": "collaboration",
+      "name": "Collaboration",
+      "desc": "Contribuer à une activité collective et coordonner son action.",
+      "domain": "Relationnel"
+    },
+    {
+      "id": "ecoute",
+      "name": "Écoute",
+      "desc": "Écouter attentivement et reformuler pour vérifier sa compréhension.",
+      "domain": "Relationnel"
+    },
+    {
+      "id": "transmission",
+      "name": "Transmission à d'autres",
+      "desc": "Expliquer une méthode ou une connaissance à une autre personne.",
+      "domain": "Relationnel"
+    },
+    {
+      "id": "mediation",
+      "name": "Médiation entre personnes",
+      "desc": "Faciliter un échange lorsque deux personnes cherchent un accord.",
+      "domain": "Relationnel"
+    },
+    {
+      "id": "planification",
+      "name": "Planification",
+      "desc": "Organiser les étapes d’une activité pour atteindre un objectif.",
+      "domain": "Organisation"
+    },
+    {
+      "id": "initiative",
+      "name": "Initiative",
+      "desc": "Proposer et engager une action de manière autonome.",
+      "domain": "Organisation"
+    },
+    {
+      "id": "gestion-temps",
+      "name": "Gestion du temps",
+      "desc": "Répartir son temps entre plusieurs tâches et respecter les échéances.",
+      "domain": "Organisation"
+    },
+    {
+      "id": "rigueur",
+      "name": "Rigueur",
+      "desc": "Vérifier son travail et respecter les consignes convenues.",
+      "domain": "Organisation"
+    },
+    {
+      "id": "autonomie",
+      "name": "Autonomie",
+      "desc": "Réaliser une activité avec peu d’aide une fois la méthode comprise.",
+      "domain": "Organisation"
+    },
+    {
+      "id": "budget-simple",
+      "name": "Suivi d’un budget simple",
+      "desc": "Noter des dépenses et suivre un budget prévu.",
+      "domain": "Organisation"
+    },
+    {
+      "id": "resolution",
+      "name": "Résolution de problèmes",
+      "desc": "Identifier un problème, tester une solution et ajuster si nécessaire.",
+      "domain": "Analyse"
+    },
+    {
+      "id": "logique",
+      "name": "Logique",
+      "desc": "Relier des informations pour tirer une conclusion cohérente.",
+      "domain": "Analyse"
+    },
+    {
+      "id": "analyse",
+      "name": "Esprit d’analyse",
+      "desc": "Comparer plusieurs informations avant de choisir une action.",
+      "domain": "Analyse"
+    },
+    {
+      "id": "precision",
+      "name": "Précision du geste",
+      "desc": "Réaliser un geste précis et reproductible dans une activité.",
+      "domain": "Technique"
+    },
+    {
+      "id": "systematisation",
+      "name": "Systématisation",
+      "desc": "Répéter une méthode de façon régulière et fiable.",
+      "domain": "Technique"
+    },
+    {
+      "id": "outils-numeriques",
+      "name": "Usage d’outils numériques",
+      "desc": "Utiliser des outils numériques courants pour produire ou organiser.",
+      "domain": "Technique"
+    },
+    {
+      "id": "atelier",
+      "name": "Travail manuel en atelier",
+      "desc": "Utiliser des outils d’atelier avec méthode et soin.",
+      "domain": "Technique"
+    },
+    {
+      "id": "creativite",
+      "name": "Créativité",
+      "desc": "Imaginer plusieurs façons de répondre à une consigne.",
+      "domain": "Créatif"
+    },
+    {
+      "id": "rythme",
+      "name": "Sens du rythme",
+      "desc": "Reproduire et maintenir un rythme dans une activité.",
+      "domain": "Créatif"
+    },
+    {
+      "id": "expression-artistique",
+      "name": "Expression artistique",
+      "desc": "Exprimer une intention par une pratique artistique.",
+      "domain": "Créatif"
+    },
+    {
+      "id": "concentration",
+      "name": "Concentration sur une tâche",
+      "desc": "Rester engagé dans une activité pendant la durée prévue.",
+      "domain": "Attention"
+    },
+    {
+      "id": "memorisation",
+      "name": "Mémorisation des séquences",
+      "desc": "Retenir l’ordre de plusieurs étapes et les reproduire.",
+      "domain": "Attention"
+    },
+    {
+      "id": "perseverance",
+      "name": "Persévérance",
+      "desc": "Continuer une activité après une difficulté et chercher une autre approche.",
+      "domain": "Attention"
+    }
+  ],
+  "organizations": [
+    {
+      "id": "lycee-cocotiers",
+      "name": "Lycée Les Cocotiers",
+      "type": "Établissement scolaire",
+      "city": "Yaoundé",
+      "verified": true,
+      "verifiedAt": "2026-01-15",
+      "method": "adresse e-mail de l'organisation confirmée",
+      "programs": [
+        "parcours-talent"
+      ],
+      "members": [
+        {
+          "name": "Mme Chantal Etoa",
+          "role": "Responsable pédagogique"
+        },
+        {
+          "name": "M. Alain Mvondo",
+          "role": "Enseignant référent"
+        }
+      ]
+    },
+    {
+      "id": "college-saint-michel",
+      "name": "Collège Saint-Michel",
+      "type": "Établissement scolaire",
+      "city": "Douala",
+      "verified": true,
+      "verifiedAt": "2026-02-03",
+      "method": "document officiel contrôlé",
+      "programs": [
+        "parcours-talent"
+      ],
+      "members": [
+        {
+          "name": "Mme Nadège Foko",
+          "role": "Conseillère d'éducation"
+        },
+        {
+          "name": "M. Thierry Mbarga",
+          "role": "Enseignant référent"
+        }
+      ]
+    },
+    {
+      "id": "talentbridge-africa",
+      "name": "TalentBridge Africa",
+      "type": "Organisation d'accompagnement",
+      "city": "Yaoundé",
+      "verified": true,
+      "verifiedAt": "2026-03-10",
+      "method": "adresse e-mail de l'organisation confirmée",
+      "programs": [
+        "talentbridge"
+      ],
+      "members": [
+        {
+          "name": "Mme Sarah Tchana",
+          "role": "Coordinatrice programme"
+        },
+        {
+          "name": "M. David Fotso",
+          "role": "Mentor"
+        },
+        {
+          "name": "Mme Mireille Abena",
+          "role": "Responsable pédagogique"
+        }
+      ]
+    },
+    {
+      "id": "jeunesse-active",
+      "name": "Association Jeunesse Active",
+      "type": "Association",
+      "city": "Bafoussam",
+      "verified": true,
+      "verifiedAt": "2026-04-18",
+      "method": "document officiel contrôlé",
+      "programs": [
+        "talentbridge"
+      ],
+      "members": [
+        {
+          "name": "M. Boris Nguema",
+          "role": "Coordinateur"
+        },
+        {
+          "name": "Mme Grâce Nono",
+          "role": "Animatrice"
+        }
+      ]
+    },
+    {
+      "id": "educ-rehab",
+      "name": "EDUC-REHAB",
+      "type": "Centre d'accompagnement",
+      "city": "Yaoundé",
+      "verified": true,
+      "verifiedAt": "2026-01-27",
+      "method": "document officiel contrôlé",
+      "programs": [
+        "autisme-talents"
+      ],
+      "members": [
+        {
+          "name": "Mme Claire Biyong",
+          "role": "Référente programme"
+        },
+        {
+          "name": "M. Eric Essomba",
+          "role": "Éducateur"
+        }
+      ]
+    },
+    {
+      "id": "harmonie",
+      "name": "École de musique Harmonie",
+      "type": "École de musique",
+      "city": "Yaoundé",
+      "verified": true,
+      "verifiedAt": "2026-02-22",
+      "method": "adresse e-mail de l'organisation confirmée",
+      "programs": [
+        "autisme-talents"
+      ],
+      "members": [
+        {
+          "name": "Mme Jeanne Meka",
+          "role": "Professeure de musique"
+        },
+        {
+          "name": "M. Loïc Talla",
+          "role": "Coordinateur"
+        }
+      ]
+    },
+    {
+      "id": "horizon",
+      "name": "Centre de formation Horizon",
+      "type": "Centre de formation",
+      "city": "Douala",
+      "verified": true,
+      "verifiedAt": "2026-05-06",
+      "method": "document officiel contrôlé",
+      "programs": [
+        "talentbridge"
+      ],
+      "members": [
+        {
+          "name": "Mme Irène Mba",
+          "role": "Responsable des admissions"
+        },
+        {
+          "name": "M. Paulin Ndom",
+          "role": "Formateur"
+        }
+      ]
+    },
+    {
+      "id": "horizons-solidaires",
+      "name": "ONG Horizons Solidaires",
+      "type": "ONG",
+      "city": "Yaoundé",
+      "verified": true,
+      "verifiedAt": "2026-05-20",
+      "method": "document officiel contrôlé",
+      "programs": [],
+      "members": [
+        {
+          "name": "Mme Alice Nono",
+          "role": "Responsable des bourses"
+        },
+        {
+          "name": "M. Samuel Ewane",
+          "role": "Coordinateur"
+        }
+      ]
+    },
+    {
+      "id": "imprim-plus",
+      "name": "Imprim'Plus",
+      "type": "Entreprise",
+      "city": "Douala",
+      "verified": false,
+      "verifiedAt": null,
+      "method": null,
+      "programs": [],
+      "members": []
+    },
+    {
+      "id": "club-robotix",
+      "name": "Club Robotix",
+      "type": "Association",
+      "city": "Yaoundé",
+      "verified": false,
+      "verifiedAt": null,
+      "method": null,
+      "programs": [],
+      "members": []
+    },
+    {
+      "id": "academie-kamga",
+      "name": "Académie Kamga",
+      "type": "Club sportif",
+      "city": "Bafoussam",
+      "verified": false,
+      "verifiedAt": null,
+      "method": null,
+      "programs": [],
+      "members": []
+    },
+    {
+      "id": "pages",
+      "name": "Club de lecture Les Pages",
+      "type": "Club",
+      "city": "Yaoundé",
+      "verified": false,
+      "verifiedAt": null,
+      "method": null,
+      "programs": [],
+      "members": []
+    },
+    {
+      "id": "ambassade-bourses",
+      "name": "Service des bourses d'une ambassade (démonstration)",
+      "type": "Institution destinataire",
+      "city": "Yaoundé",
+      "verified": false,
+      "verifiedAt": null,
+      "method": null,
+      "programs": [],
+      "members": []
+    },
+    {
+      "id": "ministere-jeunesse",
+      "name": "Ministère de la Jeunesse (démonstration)",
+      "type": "Institution destinataire",
+      "city": "Yaoundé",
+      "verified": false,
+      "verifiedAt": null,
+      "method": null,
+      "programs": [],
+      "members": []
+    }
+  ],
+  "programs": [
+    {
+      "id": "parcours-talent",
+      "name": "Parcours Talent",
+      "orgs": [
+        "lycee-cocotiers",
+        "college-saint-michel"
+      ],
+      "code": "PT-2026",
+      "vocab": "compétences",
+      "document": "Passeport académique et professionnel",
+      "start": "2026-01-08",
+      "end": "2026-12-18",
+      "capabilities": [
+        "communication",
+        "collaboration",
+        "ecoute",
+        "transmission",
+        "planification",
+        "initiative",
+        "gestion-temps",
+        "rigueur",
+        "resolution",
+        "analyse",
+        "outils-numeriques"
+      ]
+    },
+    {
+      "id": "talentbridge",
+      "name": "TalentBridge",
+      "orgs": [
+        "talentbridge-africa",
+        "jeunesse-active",
+        "horizon"
+      ],
+      "code": "TB-AFRIQUE",
+      "vocab": "capacités",
+      "document": "Profil TalentBridge",
+      "start": "2026-02-01",
+      "end": "2026-11-30",
+      "capabilities": [
+        "communication",
+        "collaboration",
+        "initiative",
+        "planification",
+        "autonomie",
+        "budget-simple",
+        "resolution",
+        "outils-numeriques",
+        "creativite",
+        "perseverance"
+      ]
+    },
+    {
+      "id": "autisme-talents",
+      "name": "Autisme & Talents",
+      "orgs": [
+        "educ-rehab",
+        "harmonie"
+      ],
+      "code": "ER-ATL",
+      "vocab": "aptitudes",
+      "document": "Carte des aptitudes et du potentiel",
+      "start": "2026-01-12",
+      "end": "2026-12-12",
+      "capabilities": [
+        "precision",
+        "systematisation",
+        "atelier",
+        "rythme",
+        "concentration",
+        "memorisation",
+        "perseverance",
+        "creativite",
+        "expression-artistique",
+        "communication"
+      ]
+    }
+  ],
+  "people": [
+    {
+      "id": "amina",
+      "name": "Amina K.",
+      "age": 19,
+      "city": "Yaoundé",
+      "managedBy": [],
+      "summary": "Étudiante et participante à Parcours Talent et TalentBridge.",
+      "programs": [
+        "parcours-talent",
+        "talentbridge"
+      ]
+    },
+    {
+      "id": "leo",
+      "name": "Léo",
+      "age": 10,
+      "city": "Yaoundé",
+      "managedBy": [
+        "paul"
+      ],
+      "summary": "Carnet suivi par son père dans Autisme & Talents.",
+      "programs": [
+        "autisme-talents"
+      ]
+    },
+    {
+      "id": "fatou",
+      "name": "Fatou D.",
+      "age": 15,
+      "city": "Douala",
+      "managedBy": [
+        "mariam"
+      ],
+      "summary": "Élève accompagnée dans Parcours Talent.",
+      "programs": [
+        "parcours-talent"
+      ]
+    },
+    {
+      "id": "brice",
+      "name": "Brice T.",
+      "age": 27,
+      "city": "Bafoussam",
+      "managedBy": [],
+      "summary": "Parcours d’apprentissage puis première expérience professionnelle.",
+      "programs": [
+        "talentbridge"
+      ]
+    },
+    {
+      "id": "carine",
+      "name": "Carine M.",
+      "age": 34,
+      "city": "Yaoundé",
+      "managedBy": [],
+      "summary": "Reconversion progressive vers l’entrepreneuriat.",
+      "programs": [
+        "talentbridge"
+      ]
+    },
+    {
+      "id": "joseph",
+      "name": "Joseph N.",
+      "age": 67,
+      "city": "Yaoundé",
+      "managedBy": [],
+      "summary": "Transmission, médiation et engagement associatif.",
+      "programs": [
+        "talentbridge"
+      ]
+    },
+    {
+      "id": "estelle",
+      "name": "Estelle B.",
+      "age": 41,
+      "city": "Douala",
+      "managedBy": [],
+      "summary": "Nouveau carnet, prêt à accueillir ses premières attestations.",
+      "programs": []
+    },
+    {
+      "id": "paul",
+      "name": "Paul M.",
+      "age": 42,
+      "city": "Yaoundé",
+      "managedBy": [],
+      "summary": "Son propre carnet et gestion du carnet de Léo.",
+      "programs": [
+        "talentbridge"
+      ]
+    },
+    {
+      "id": "mariam",
+      "name": "Mariam D.",
+      "age": 39,
+      "city": "Douala",
+      "managedBy": [],
+      "summary": "Gère le carnet de Fatou avec son accord familial.",
+      "programs": []
+    }
+  ],
+  "attestations": [
+    {
+      "id": "a1",
+      "person": "amina",
+      "cap": "communication",
+      "org": "lycee-cocotiers",
+      "program": "parcours-talent",
+      "date": "2026-02-14",
+      "text": "Amina présente ses idées clairement et reformule les échanges lors des travaux de groupe.",
+      "context": "Projet scolaire",
+      "period": "janvier-février 2026",
+      "frequency": "chaque semaine",
+      "type": "Organisation vérifiée",
+      "status": "published",
+      "source": "Lycée Les Cocotiers"
+    },
+    {
+      "id": "a2",
+      "person": "amina",
+      "cap": "collaboration",
+      "org": "lycee-cocotiers",
+      "program": "parcours-talent",
+      "date": "2026-03-02",
+      "text": "Elle répartit les tâches avec ses camarades et vérifie que chacun sait ce qu’il doit faire.",
+      "context": "Travail collectif",
+      "period": "février-mars 2026",
+      "frequency": "chaque semaine",
+      "type": "Organisation vérifiée",
+      "status": "published",
+      "source": "Lycée Les Cocotiers"
+    },
+    {
+      "id": "a3",
+      "person": "amina",
+      "cap": "initiative",
+      "org": "talentbridge-africa",
+      "program": "talentbridge",
+      "date": "2026-03-21",
+      "text": "Amina a proposé un atelier de préparation aux entretiens et l’a organisé avec deux autres participantes.",
+      "context": "Atelier TalentBridge",
+      "period": "mars 2026",
+      "frequency": "une fois",
+      "type": "Organisation vérifiée",
+      "status": "published",
+      "source": "TalentBridge Africa"
+    },
+    {
+      "id": "a4",
+      "person": "amina",
+      "cap": "planification",
+      "org": "lycee-cocotiers",
+      "program": "parcours-talent",
+      "date": "2026-04-08",
+      "text": "Elle construit un planning simple, suit les étapes et ajuste l’ordre des tâches avant une présentation.",
+      "context": "Projet scolaire",
+      "period": "mars-avril 2026",
+      "frequency": "deux fois par mois",
+      "type": "Organisation vérifiée",
+      "status": "published",
+      "source": "Lycée Les Cocotiers"
+    },
+    {
+      "id": "a5",
+      "person": "amina",
+      "cap": "outils-numeriques",
+      "org": "talentbridge-africa",
+      "program": "talentbridge",
+      "date": "2026-05-12",
+      "text": "Elle utilise un tableur pour organiser les informations d’un projet et produire un support partagé.",
+      "context": "Projet numérique",
+      "period": "avril-mai 2026",
+      "frequency": "chaque semaine",
+      "type": "Organisation vérifiée",
+      "status": "published",
+      "source": "TalentBridge Africa"
+    },
+    {
+      "id": "a6",
+      "person": "amina",
+      "cap": "creativite",
+      "org": "jeunesse-active",
+      "program": "talentbridge",
+      "date": "2026-06-18",
+      "text": "Amina a proposé trois formats pour présenter un projet associatif et a retenu celui adapté au public.",
+      "context": "Projet associatif",
+      "period": "juin 2026",
+      "frequency": "une fois",
+      "type": "Organisation vérifiée",
+      "status": "published",
+      "source": "Association Jeunesse Active"
+    },
+    {
+      "id": "a7",
+      "person": "amina",
+      "cap": "perseverance",
+      "org": "talentbridge-africa",
+      "program": "talentbridge",
+      "date": "2026-07-08",
+      "text": "Après plusieurs essais, elle a corrigé sa présentation et l’a finalisée dans le délai prévu.",
+      "context": "Projet TalentBridge",
+      "period": "juillet 2026",
+      "frequency": "une fois",
+      "type": "Organisation vérifiée",
+      "status": "published",
+      "source": "TalentBridge Africa"
+    },
+    {
+      "id": "a8",
+      "person": "amina",
+      "cap": "ecoute",
+      "org": "talentbridge-africa",
+      "program": "talentbridge",
+      "date": "2026-08-05",
+      "text": "Elle reformule les besoins exprimés par les autres participants avant de proposer une solution.",
+      "context": "Atelier collectif",
+      "period": "août 2026",
+      "frequency": "deux fois",
+      "type": "Organisation vérifiée",
+      "status": "published",
+      "source": "TalentBridge Africa"
+    },
+    {
+      "id": "a9",
+      "person": "amina",
+      "cap": "resolution",
+      "org": "talentbridge-africa",
+      "program": "talentbridge",
+      "date": "2026-08-26",
+      "text": "Face à un tableau incomplet, elle a identifié les données manquantes et proposé une méthode de vérification.",
+      "context": "Exercice de projet",
+      "period": "août 2026",
+      "frequency": "une fois",
+      "type": "Organisation vérifiée",
+      "status": "published",
+      "source": "TalentBridge Africa"
+    },
+    {
+      "id": "a10",
+      "person": "amina",
+      "cap": "gestion-temps",
+      "org": "imprim-plus",
+      "program": null,
+      "date": "2026-09-02",
+      "text": "Amina a organisé la préparation d’une petite commande et respecté l’heure convenue.",
+      "context": "Commande associative",
+      "period": "août-septembre 2026",
+      "frequency": "une fois",
+      "type": "Personne identifiée par e-mail",
+      "status": "published",
+      "source": "Imprim'Plus"
+    },
+    {
+      "id": "l1",
+      "person": "leo",
+      "cap": "precision",
+      "org": "educ-rehab",
+      "program": "autisme-talents",
+      "date": "2026-02-11",
+      "text": "Léo reproduit une série de gestes d’assemblage avec régularité pendant l’atelier.",
+      "context": "Atelier de manipulation",
+      "period": "février 2026",
+      "frequency": "chaque semaine",
+      "type": "Organisation vérifiée",
+      "status": "published",
+      "source": "EDUC-REHAB"
+    },
+    {
+      "id": "l2",
+      "person": "leo",
+      "cap": "concentration",
+      "org": "educ-rehab",
+      "program": "autisme-talents",
+      "date": "2026-03-19",
+      "text": "Il reste engagé dans une activité de tri pendant la durée prévue et reprend après une courte pause.",
+      "context": "Atelier de tri",
+      "period": "mars 2026",
+      "frequency": "chaque semaine",
+      "type": "Organisation vérifiée",
+      "status": "published",
+      "source": "EDUC-REHAB"
+    },
+    {
+      "id": "l3",
+      "person": "leo",
+      "cap": "memorisation",
+      "org": "educ-rehab",
+      "program": "autisme-talents",
+      "date": "2026-04-23",
+      "text": "Il mémorise l’ordre de quatre étapes et les reproduit avec peu de rappel.",
+      "context": "Séquence d’activité",
+      "period": "avril 2026",
+      "frequency": "deux fois par mois",
+      "type": "Organisation vérifiée",
+      "status": "published",
+      "source": "EDUC-REHAB"
+    },
+    {
+      "id": "l4",
+      "person": "leo",
+      "cap": "rythme",
+      "org": "harmonie",
+      "program": "autisme-talents",
+      "date": "2026-05-15",
+      "text": "Léo maintient un rythme régulier sur une séquence musicale et reprend après un changement de tempo.",
+      "context": "Cours de musique",
+      "period": "mai 2026",
+      "frequency": "chaque semaine",
+      "type": "Organisation vérifiée",
+      "status": "published",
+      "source": "École de musique Harmonie"
+    },
+    {
+      "id": "l5",
+      "person": "leo",
+      "cap": "systematisation",
+      "org": "educ-rehab",
+      "program": "autisme-talents",
+      "date": "2026-06-10",
+      "text": "Il applique la même méthode sur plusieurs séries et vérifie chaque étape avant de passer à la suivante.",
+      "context": "Atelier",
+      "period": "juin 2026",
+      "frequency": "chaque semaine",
+      "type": "Organisation vérifiée",
+      "status": "published",
+      "source": "EDUC-REHAB"
+    },
+    {
+      "id": "l6",
+      "person": "leo",
+      "cap": "communication",
+      "org": "harmonie",
+      "program": "autisme-talents",
+      "date": "2026-07-02",
+      "text": "Léo indique clairement le début et la fin d’une activité musicale et répond aux consignes données.",
+      "context": "Cours de musique",
+      "period": "juillet 2026",
+      "frequency": "chaque semaine",
+      "type": "Organisation vérifiée",
+      "status": "published",
+      "source": "École de musique Harmonie"
+    },
+    {
+      "id": "f1",
+      "person": "fatou",
+      "cap": "communication",
+      "org": "college-saint-michel",
+      "program": "parcours-talent",
+      "date": "2026-02-08",
+      "text": "Fatou présente un exposé en adaptant ses explications aux questions de la classe.",
+      "context": "Exposé",
+      "period": "Exposé",
+      "frequency": "deux fois par mois",
+      "type": "Organisation vérifiée",
+      "status": "published",
+      "source": "Collège Saint-Michel"
+    },
+    {
+      "id": "f2",
+      "person": "fatou",
+      "cap": "planification",
+      "org": "college-saint-michel",
+      "program": "parcours-talent",
+      "date": "2026-03-12",
+      "text": "Elle découpe un travail en étapes et suit les échéances annoncées.",
+      "context": "Projet scolaire",
+      "period": "Projet scolaire",
+      "frequency": "deux fois par mois",
+      "type": "Organisation vérifiée",
+      "status": "published",
+      "source": "Collège Saint-Michel"
+    },
+    {
+      "id": "f3",
+      "person": "fatou",
+      "cap": "collaboration",
+      "org": "college-saint-michel",
+      "program": "parcours-talent",
+      "date": "2026-04-04",
+      "text": "Elle coordonne la préparation d’un travail à quatre et relance les tâches restantes.",
+      "context": "Travail collectif",
+      "period": "Travail collectif",
+      "frequency": "deux fois par mois",
+      "type": "Organisation vérifiée",
+      "status": "published",
+      "source": "Collège Saint-Michel"
+    },
+    {
+      "id": "f4",
+      "person": "fatou",
+      "cap": "ecoute",
+      "org": "college-saint-michel",
+      "program": "parcours-talent",
+      "date": "2026-05-06",
+      "text": "Fatou reformule les consignes avant de commencer une activité nouvelle.",
+      "context": "Atelier pédagogique",
+      "period": "Atelier pédagogique",
+      "frequency": "deux fois par mois",
+      "type": "Organisation vérifiée",
+      "status": "published",
+      "source": "Collège Saint-Michel"
+    },
+    {
+      "id": "f5",
+      "person": "fatou",
+      "cap": "initiative",
+      "org": "college-saint-michel",
+      "program": "parcours-talent",
+      "date": "2026-06-17",
+      "text": "Elle propose une nouvelle organisation du groupe lorsque le premier planning ne convient pas.",
+      "context": "Projet de classe",
+      "period": "Projet de classe",
+      "frequency": "deux fois par mois",
+      "type": "Organisation vérifiée",
+      "status": "published",
+      "source": "Collège Saint-Michel"
+    },
+    {
+      "id": "f6",
+      "person": "fatou",
+      "cap": "outils-numeriques",
+      "org": "college-saint-michel",
+      "program": "parcours-talent",
+      "date": "2026-07-09",
+      "text": "Elle prépare un document partagé et organise les sources utilisées pour un exposé.",
+      "context": "Projet numérique",
+      "period": "Projet numérique",
+      "frequency": "deux fois par mois",
+      "type": "Organisation vérifiée",
+      "status": "published",
+      "source": "Collège Saint-Michel"
+    },
+    {
+      "id": "b1",
+      "person": "brice",
+      "cap": "initiative",
+      "org": "talentbridge-africa",
+      "program": "talentbridge",
+      "date": "2026-02-15",
+      "text": "Brice propose une amélioration de l’organisation d’un atelier et la met en œuvre.",
+      "context": "Atelier d’apprentissage",
+      "period": "2026",
+      "frequency": "chaque semaine",
+      "type": "Organisation vérifiée",
+      "status": "published",
+      "source": "TalentBridge Africa"
+    },
+    {
+      "id": "b2",
+      "person": "brice",
+      "cap": "precision",
+      "org": "talentbridge-africa",
+      "program": "talentbridge",
+      "date": "2026-03-18",
+      "text": "Il réalise des opérations répétitives avec un contrôle régulier de la qualité.",
+      "context": "Atelier technique",
+      "period": "2026",
+      "frequency": "chaque semaine",
+      "type": "Organisation vérifiée",
+      "status": "published",
+      "source": "TalentBridge Africa"
+    },
+    {
+      "id": "b3",
+      "person": "brice",
+      "cap": "outils-numeriques",
+      "org": "talentbridge-africa",
+      "program": "talentbridge",
+      "date": "2026-04-09",
+      "text": "Il utilise un outil numérique pour suivre des tâches et signaler les éléments terminés.",
+      "context": "Suivi de projet",
+      "period": "2026",
+      "frequency": "chaque semaine",
+      "type": "Organisation vérifiée",
+      "status": "published",
+      "source": "TalentBridge Africa"
+    },
+    {
+      "id": "b4",
+      "person": "brice",
+      "cap": "rigueur",
+      "org": "talentbridge-africa",
+      "program": "talentbridge",
+      "date": "2026-05-20",
+      "text": "Il vérifie les éléments produits avant livraison et corrige les écarts repérés.",
+      "context": "Première expérience professionnelle",
+      "period": "2026",
+      "frequency": "chaque semaine",
+      "type": "Organisation vérifiée",
+      "status": "published",
+      "source": "TalentBridge Africa"
+    },
+    {
+      "id": "b5",
+      "person": "brice",
+      "cap": "collaboration",
+      "org": "jeunesse-active",
+      "program": "talentbridge",
+      "date": "2026-06-11",
+      "text": "Il répartit les tâches d’une petite équipe et fait circuler les informations utiles.",
+      "context": "Projet associatif",
+      "period": "2026",
+      "frequency": "chaque semaine",
+      "type": "Organisation vérifiée",
+      "status": "published",
+      "source": "Association Jeunesse Active"
+    },
+    {
+      "id": "b6",
+      "person": "brice",
+      "cap": "autonomie",
+      "org": "jeunesse-active",
+      "program": "talentbridge",
+      "date": "2026-07-14",
+      "text": "Après démonstration, Brice réalise la procédure seul et demande de l’aide uniquement lorsque nécessaire.",
+      "context": "Atelier pratique",
+      "period": "2026",
+      "frequency": "chaque semaine",
+      "type": "Organisation vérifiée",
+      "status": "published",
+      "source": "Association Jeunesse Active"
+    },
+    {
+      "id": "b7",
+      "person": "brice",
+      "cap": "communication",
+      "org": "imprim-plus",
+      "program": "talentbridge",
+      "date": "2026-08-03",
+      "text": "Brice explique clairement l’état d’une commande et confirme les informations utiles.",
+      "context": "Commande client",
+      "period": "2026",
+      "frequency": "une fois",
+      "type": "Personne identifiée par e-mail",
+      "status": "published",
+      "source": "Imprim'Plus"
+    },
+    {
+      "id": "b8",
+      "person": "brice",
+      "cap": "resolution",
+      "org": "club-robotix",
+      "program": "talentbridge",
+      "date": "2026-08-29",
+      "text": "Brice identifie une pièce mal positionnée et propose une correction qui permet de terminer l’assemblage.",
+      "context": "Atelier robotique",
+      "period": "2026",
+      "frequency": "une fois",
+      "type": "Personne identifiée par e-mail",
+      "status": "published",
+      "source": "Club Robotix"
+    },
+    {
+      "id": "c1",
+      "person": "carine",
+      "cap": "initiative",
+      "org": "talentbridge-africa",
+      "program": "talentbridge",
+      "date": "2026-03-03",
+      "text": "Carine teste une nouvelle offre de service et organise elle-même les premières étapes.",
+      "context": "Projet de reconversion",
+      "period": "2026",
+      "frequency": "deux fois par mois",
+      "type": "Organisation vérifiée",
+      "status": "published",
+      "source": "TalentBridge Africa"
+    },
+    {
+      "id": "c2",
+      "person": "carine",
+      "cap": "budget-simple",
+      "org": "talentbridge-africa",
+      "program": "talentbridge",
+      "date": "2026-04-15",
+      "text": "Elle tient un tableau simple des dépenses d’un projet et compare les montants au budget prévu.",
+      "context": "Projet de reconversion",
+      "period": "2026",
+      "frequency": "deux fois par mois",
+      "type": "Organisation vérifiée",
+      "status": "published",
+      "source": "TalentBridge Africa"
+    },
+    {
+      "id": "c3",
+      "person": "carine",
+      "cap": "planification",
+      "org": "talentbridge-africa",
+      "program": "talentbridge",
+      "date": "2026-05-21",
+      "text": "Elle planifie les étapes d’une petite activité commerciale et suit les échéances.",
+      "context": "Projet de reconversion",
+      "period": "2026",
+      "frequency": "deux fois par mois",
+      "type": "Organisation vérifiée",
+      "status": "published",
+      "source": "TalentBridge Africa"
+    },
+    {
+      "id": "c4",
+      "person": "carine",
+      "cap": "communication",
+      "org": "talentbridge-africa",
+      "program": "talentbridge",
+      "date": "2026-06-18",
+      "text": "Elle présente son idée à plusieurs interlocuteurs et adapte son explication à leurs questions.",
+      "context": "Projet de reconversion",
+      "period": "2026",
+      "frequency": "deux fois par mois",
+      "type": "Organisation vérifiée",
+      "status": "published",
+      "source": "TalentBridge Africa"
+    },
+    {
+      "id": "c5",
+      "person": "carine",
+      "cap": "analyse",
+      "org": "talentbridge-africa",
+      "program": "talentbridge",
+      "date": "2026-07-25",
+      "text": "Elle compare plusieurs options avant de choisir un fournisseur pour son projet.",
+      "context": "Projet de reconversion",
+      "period": "2026",
+      "frequency": "deux fois par mois",
+      "type": "Organisation vérifiée",
+      "status": "published",
+      "source": "TalentBridge Africa"
+    },
+    {
+      "id": "c6",
+      "person": "carine",
+      "cap": "perseverance",
+      "org": "talentbridge-africa",
+      "program": "talentbridge",
+      "date": "2026-08-28",
+      "text": "Elle poursuit les démarches malgré un premier refus et reformule son offre.",
+      "context": "Projet de reconversion",
+      "period": "2026",
+      "frequency": "deux fois par mois",
+      "type": "Organisation vérifiée",
+      "status": "published",
+      "source": "TalentBridge Africa"
+    },
+    {
+      "id": "j1",
+      "person": "joseph",
+      "cap": "transmission",
+      "org": "jeunesse-active",
+      "program": "talentbridge",
+      "date": "2026-02-20",
+      "text": "Joseph explique une méthode de préparation d’activité aux nouveaux bénévoles.",
+      "context": "Accueil de bénévoles",
+      "period": "2026",
+      "frequency": "chaque mois",
+      "type": "Organisation vérifiée",
+      "status": "published",
+      "source": "Association Jeunesse Active"
+    },
+    {
+      "id": "j2",
+      "person": "joseph",
+      "cap": "mediation",
+      "org": "horizons-solidaires",
+      "program": "talentbridge",
+      "date": "2026-04-07",
+      "text": "Il reformule les points de vue de deux groupes et facilite la recherche d’un accord.",
+      "context": "Projet associatif",
+      "period": "2026",
+      "frequency": "chaque mois",
+      "type": "Organisation vérifiée",
+      "status": "published",
+      "source": "ONG Horizons Solidaires"
+    },
+    {
+      "id": "j3",
+      "person": "joseph",
+      "cap": "ecoute",
+      "org": "horizons-solidaires",
+      "program": "talentbridge",
+      "date": "2026-05-13",
+      "text": "Il écoute les demandes des participants avant de proposer une réponse adaptée.",
+      "context": "Permanence associative",
+      "period": "2026",
+      "frequency": "chaque mois",
+      "type": "Organisation vérifiée",
+      "status": "published",
+      "source": "ONG Horizons Solidaires"
+    },
+    {
+      "id": "j4",
+      "person": "joseph",
+      "cap": "communication",
+      "org": "jeunesse-active",
+      "program": "talentbridge",
+      "date": "2026-06-24",
+      "text": "Joseph présente clairement les étapes d’une activité à un groupe de bénévoles.",
+      "context": "Réunion associative",
+      "period": "2026",
+      "frequency": "chaque mois",
+      "type": "Organisation vérifiée",
+      "status": "published",
+      "source": "Association Jeunesse Active"
+    },
+    {
+      "id": "j5",
+      "person": "joseph",
+      "cap": "collaboration",
+      "org": "jeunesse-active",
+      "program": "talentbridge",
+      "date": "2026-08-06",
+      "text": "Il coordonne plusieurs bénévoles et partage les informations nécessaires au bon déroulement de l’activité.",
+      "context": "Action locale",
+      "period": "2026",
+      "frequency": "chaque mois",
+      "type": "Organisation vérifiée",
+      "status": "published",
+      "source": "Association Jeunesse Active"
+    },
+    {
+      "id": "p1",
+      "person": "paul",
+      "cap": "communication",
+      "org": "talentbridge-africa",
+      "program": "talentbridge",
+      "date": "2026-02-12",
+      "text": "Paul explique les étapes d’une activité à un groupe de parents et répond aux questions.",
+      "context": "Réunion de parents",
+      "period": "2026",
+      "frequency": "chaque mois",
+      "type": "Organisation vérifiée",
+      "status": "published",
+      "source": "TalentBridge Africa"
+    },
+    {
+      "id": "p2",
+      "person": "paul",
+      "cap": "planification",
+      "org": "talentbridge-africa",
+      "program": "talentbridge",
+      "date": "2026-04-19",
+      "text": "Il organise les étapes d’un événement familial et répartit les tâches.",
+      "context": "Organisation d’événement",
+      "period": "2026",
+      "frequency": "chaque mois",
+      "type": "Organisation vérifiée",
+      "status": "published",
+      "source": "TalentBridge Africa"
+    },
+    {
+      "id": "p3",
+      "person": "paul",
+      "cap": "outils-numeriques",
+      "org": "talentbridge-africa",
+      "program": "talentbridge",
+      "date": "2026-06-08",
+      "text": "Il tient un tableau partagé pour suivre des rendez-vous et des tâches.",
+      "context": "Organisation familiale",
+      "period": "2026",
+      "frequency": "chaque mois",
+      "type": "Organisation vérifiée",
+      "status": "published",
+      "source": "TalentBridge Africa"
+    },
+    {
+      "id": "p4",
+      "person": "paul",
+      "cap": "collaboration",
+      "org": "talentbridge-africa",
+      "program": "talentbridge",
+      "date": "2026-08-17",
+      "text": "Il coordonne plusieurs intervenants autour d’une activité collective.",
+      "context": "Projet associatif",
+      "period": "2026",
+      "frequency": "chaque mois",
+      "type": "Organisation vérifiée",
+      "status": "published",
+      "source": "TalentBridge Africa"
+    },
+    {
+      "id": "a11",
+      "person": "amina",
+      "cap": "analyse",
+      "org": "talentbridge-africa",
+      "program": "talentbridge",
+      "date": "2026-09-10",
+      "text": "Amina a comparé plusieurs informations avant de proposer une méthode de suivi.",
+      "context": "Atelier d’analyse",
+      "period": "septembre 2026",
+      "frequency": "une fois",
+      "type": "Organisation vérifiée",
+      "status": "pending",
+      "source": "TalentBridge Africa"
+    },
+    {
+      "id": "a12",
+      "person": "amina",
+      "cap": "rigueur",
+      "org": "pages",
+      "program": null,
+      "date": "2026-08-14",
+      "text": "Le club a proposé une attestation, mais Amina ne l’a pas encore acceptée.",
+      "context": "Club de lecture",
+      "period": "août 2026",
+      "frequency": "une fois",
+      "type": "Personne identifiée par e-mail",
+      "status": "pending",
+      "source": "Club de lecture Les Pages"
+    },
+    {
+      "id": "a13",
+      "person": "amina",
+      "cap": "rythme",
+      "org": "academie-kamga",
+      "program": null,
+      "date": "2026-07-20",
+      "text": "Une attestation ancienne a été refusée après vérification du contexte.",
+      "context": "Activité sportive",
+      "period": "juillet 2026",
+      "frequency": "une fois",
+      "type": "Personne identifiée par e-mail",
+      "status": "refused",
+      "source": "Académie Kamga"
+    },
+    {
+      "id": "a14",
+      "person": "amina",
+      "cap": "creativite",
+      "org": "jeunesse-active",
+      "program": "talentbridge",
+      "date": "2026-06-18",
+      "text": "Amina a produit une idée créative dans un projet collectif.",
+      "context": "Projet associatif",
+      "period": "juin 2026",
+      "frequency": "une fois",
+      "type": "Organisation vérifiée",
+      "status": "masked",
+      "source": "Association Jeunesse Active"
+    },
+    {
+      "id": "f7",
+      "person": "fatou",
+      "cap": "resolution",
+      "org": "college-saint-michel",
+      "program": "parcours-talent",
+      "date": "2026-09-04",
+      "text": "Fatou propose une méthode pour résoudre un exercice qui bloque son groupe.",
+      "context": "Projet scolaire",
+      "period": "septembre 2026",
+      "frequency": "une fois",
+      "type": "Organisation vérifiée",
+      "status": "pending",
+      "source": "Collège Saint-Michel"
+    }
+  ],
+  "requests": [
+    {
+      "id": "rq1",
+      "person": "amina",
+      "org": "talentbridge-africa",
+      "program": "talentbridge",
+      "cap": "communication",
+      "state": "received",
+      "date": "2026-09-12",
+      "via": "organisation"
+    },
+    {
+      "id": "rq2",
+      "person": "amina",
+      "org": "lycee-cocotiers",
+      "program": "parcours-talent",
+      "cap": "analyse",
+      "state": "sent",
+      "date": "2026-09-14",
+      "via": "organisation"
+    },
+    {
+      "id": "rq3",
+      "person": "amina",
+      "org": "pages",
+      "program": null,
+      "cap": "rigueur",
+      "state": "opened",
+      "date": "2026-08-14",
+      "via": "lien"
+    },
+    {
+      "id": "rq4",
+      "person": "brice",
+      "org": "imprim-plus",
+      "program": null,
+      "cap": "communication",
+      "state": "received",
+      "date": "2026-08-03",
+      "via": "lien"
+    },
+    {
+      "id": "rq5",
+      "person": "leo",
+      "org": "educ-rehab",
+      "program": "autisme-talents",
+      "cap": "precision",
+      "state": "received",
+      "date": "2026-09-05",
+      "via": "organisation"
+    },
+    {
+      "id": "rq6",
+      "person": "fatou",
+      "org": "college-saint-michel",
+      "program": "parcours-talent",
+      "cap": "resolution",
+      "state": "sent",
+      "date": "2026-09-04",
+      "via": "organisation"
+    },
+    {
+      "id": "rq7",
+      "person": "carine",
+      "org": "horizon",
+      "program": "talentbridge",
+      "cap": "initiative",
+      "state": "received",
+      "date": "2026-09-01",
+      "via": "organisation"
+    },
+    {
+      "id": "rq8",
+      "person": "joseph",
+      "org": "horizons-solidaires",
+      "program": null,
+      "cap": "mediation",
+      "state": "opened",
+      "date": "2026-04-07",
+      "via": "lien"
+    },
+    {
+      "id": "rq9",
+      "person": "amina",
+      "org": "club-robotix",
+      "program": null,
+      "cap": "resolution",
+      "state": "expired",
+      "date": "2026-08-01",
+      "via": "lien"
+    }
+  ],
+  "shares": [
+    {
+      "id": "sh1",
+      "person": "amina",
+      "recipient": "Centre de formation Horizon",
+      "recipientOrg": "horizon",
+      "purpose": "Admission à une formation",
+      "scope": "selection",
+      "caps": [
+        "communication",
+        "collaboration",
+        "initiative",
+        "outils-numeriques",
+        "resolution"
+      ],
+      "created": "2026-08-30",
+      "expires": "2026-10-15",
+      "status": "active",
+      "views": 4,
+      "lastViewed": "2026-09-18"
+    },
+    {
+      "id": "sh2",
+      "person": "amina",
+      "recipient": "Service des bourses d'une ambassade (démonstration)",
+      "recipientOrg": "ambassade-bourses",
+      "purpose": "Dossier de bourse",
+      "scope": "program",
+      "program": "talentbridge",
+      "caps": [],
+      "created": "2026-09-01",
+      "expires": "2026-11-01",
+      "status": "active",
+      "views": 2,
+      "lastViewed": "2026-09-19"
+    },
+    {
+      "id": "sh3",
+      "person": "amina",
+      "recipient": "Ministère de la Jeunesse (démonstration)",
+      "recipientOrg": "ministere-jeunesse",
+      "purpose": "Candidature à un programme",
+      "scope": "selection",
+      "caps": [
+        "initiative",
+        "planification",
+        "communication"
+      ],
+      "created": "2026-07-12",
+      "expires": "2026-08-12",
+      "status": "expired",
+      "views": 7,
+      "lastViewed": "2026-08-11"
+    },
+    {
+      "id": "sh4",
+      "person": "brice",
+      "recipient": "Centre de formation Horizon",
+      "recipientOrg": "horizon",
+      "purpose": "Admission à une formation",
+      "scope": "selection",
+      "caps": [
+        "precision",
+        "autonomie",
+        "outils-numeriques"
+      ],
+      "created": "2026-08-02",
+      "expires": "2026-09-02",
+      "status": "expired",
+      "views": 3,
+      "lastViewed": "2026-08-27"
+    },
+    {
+      "id": "sh5",
+      "person": "carine",
+      "recipient": "ONG Horizons Solidaires",
+      "recipientOrg": "horizons-solidaires",
+      "purpose": "Dossier de soutien",
+      "scope": "selection",
+      "caps": [
+        "initiative",
+        "budget-simple",
+        "planification",
+        "perseverance"
+      ],
+      "created": "2026-09-03",
+      "expires": "2026-10-03",
+      "status": "active",
+      "views": 1,
+      "lastViewed": "2026-09-08"
+    },
+    {
+      "id": "sh6",
+      "person": "joseph",
+      "recipient": "Service des bourses d'une ambassade (démonstration)",
+      "recipientOrg": "ambassade-bourses",
+      "purpose": "Dossier de transmission associative",
+      "scope": "selection",
+      "caps": [
+        "transmission",
+        "mediation",
+        "communication"
+      ],
+      "created": "2026-06-20",
+      "expires": "2026-07-20",
+      "status": "withdrawn",
+      "views": 5,
+      "lastViewed": "2026-07-03"
+    },
+    {
+      "id": "sh7",
+      "person": "leo",
+      "recipient": "École de musique Harmonie",
+      "recipientOrg": "harmonie",
+      "purpose": "Suivi musical",
+      "scope": "selection",
+      "caps": [
+        "rythme",
+        "memorisation",
+        "concentration"
+      ],
+      "created": "2026-08-15",
+      "expires": "2026-10-15",
+      "status": "active",
+      "views": 2,
+      "lastViewed": "2026-09-10"
+    },
+    {
+      "id": "sh8",
+      "person": "fatou",
+      "recipient": "Ministère de la Jeunesse (démonstration)",
+      "recipientOrg": "ministere-jeunesse",
+      "purpose": "Dossier de programme",
+      "scope": "program",
+      "program": "parcours-talent",
+      "caps": [],
+      "created": "2026-06-11",
+      "expires": "2026-09-30",
+      "status": "active",
+      "views": 1,
+      "lastViewed": "2026-09-12"
+    }
+  ],
+  "notifications": [
+    {
+      "id": "n1",
+      "person": "amina",
+      "date": "2026-09-18",
+      "read": false,
+      "text": "Le Centre de formation Horizon a consulté votre partage."
+    },
+    {
+      "id": "n2",
+      "person": "amina",
+      "date": "2026-09-14",
+      "read": false,
+      "text": "Votre demande d’attestation en Analyse a été envoyée au Lycée Les Cocotiers."
+    },
+    {
+      "id": "n3",
+      "person": "amina",
+      "date": "2026-09-12",
+      "read": true,
+      "text": "TalentBridge Africa a reçu votre demande d’attestation en Communication."
+    },
+    {
+      "id": "n4",
+      "person": "amina",
+      "date": "2026-09-10",
+      "read": true,
+      "text": "Une nouvelle attestation d’Analyse est en attente de publication."
+    },
+    {
+      "id": "n5",
+      "person": "amina",
+      "date": "2026-09-08",
+      "read": true,
+      "text": "Votre partage pour l’ambassade a été consulté."
+    },
+    {
+      "id": "n6",
+      "person": "amina",
+      "date": "2026-08-30",
+      "read": true,
+      "text": "Votre nouveau partage pour le Centre de formation Horizon est actif."
+    },
+    {
+      "id": "n7",
+      "person": "leo",
+      "date": "2026-09-05",
+      "read": false,
+      "text": "EDUC-REHAB a reçu une demande d’attestation."
+    },
+    {
+      "id": "n8",
+      "person": "fatou",
+      "date": "2026-09-04",
+      "read": false,
+      "text": "Une attestation de Résolution est en attente."
+    },
+    {
+      "id": "n9",
+      "person": "brice",
+      "date": "2026-08-29",
+      "read": true,
+      "text": "Une attestation par lien a été reçue."
+    },
+    {
+      "id": "n10",
+      "person": "carine",
+      "date": "2026-09-03",
+      "read": true,
+      "text": "Un partage a été créé pour l’ONG Horizons Solidaires."
+    }
+  ],
+  "consultations": [
+    {
+      "person": "amina",
+      "share": "sh1",
+      "who": "Centre de formation Horizon",
+      "date": "2026-09-18"
+    },
+    {
+      "person": "amina",
+      "share": "sh1",
+      "who": "Centre de formation Horizon",
+      "date": "2026-09-15"
+    },
+    {
+      "person": "amina",
+      "share": "sh2",
+      "who": "Service des bourses d'une ambassade (démonstration)",
+      "date": "2026-09-19"
+    },
+    {
+      "person": "amina",
+      "share": "sh2",
+      "who": "Service des bourses d'une ambassade (démonstration)",
+      "date": "2026-09-08"
+    },
+    {
+      "person": "amina",
+      "share": "sh3",
+      "who": "Ministère de la Jeunesse (démonstration)",
+      "date": "2026-08-11"
+    },
+    {
+      "person": "brice",
+      "share": "sh4",
+      "who": "Centre de formation Horizon",
+      "date": "2026-08-27"
+    },
+    {
+      "person": "carine",
+      "share": "sh5",
+      "who": "ONG Horizons Solidaires",
+      "date": "2026-09-08"
+    },
+    {
+      "person": "joseph",
+      "share": "sh6",
+      "who": "Service des bourses d'une ambassade (démonstration)",
+      "date": "2026-07-03"
+    }
+  ],
+  "enrollments": [
+    {
+      "person": "amina",
+      "program": "parcours-talent",
+      "start": "2026-01-08",
+      "end": "2026-12-18"
+    },
+    {
+      "person": "amina",
+      "program": "talentbridge",
+      "start": "2026-02-01",
+      "end": "2026-11-30"
+    },
+    {
+      "person": "leo",
+      "program": "autisme-talents",
+      "start": "2026-01-12",
+      "end": "2026-12-12"
+    },
+    {
+      "person": "fatou",
+      "program": "parcours-talent",
+      "start": "2026-01-08",
+      "end": "2026-12-18"
+    },
+    {
+      "person": "brice",
+      "program": "talentbridge",
+      "start": "2026-02-01",
+      "end": "2026-11-30"
+    },
+    {
+      "person": "carine",
+      "program": "talentbridge",
+      "start": "2026-02-01",
+      "end": "2026-11-30"
+    },
+    {
+      "person": "joseph",
+      "program": "talentbridge",
+      "start": "2026-02-01",
+      "end": "2026-11-30"
+    },
+    {
+      "person": "paul",
+      "program": "talentbridge",
+      "start": "2026-02-01",
+      "end": "2026-11-30"
+    }
+  ]
+};
