@@ -1,253 +1,59 @@
-/*
- CDS — Fusion v9
- UX sobre inspirée de v8-complete + moteur applicatif de CDS App JS v1.
- Un seul état partagé. Les formulaires produisent les objets du cycle.
-*/
-const KEY="cds_fusion_v11";
-const blank={
- stage:0,
- challenge:null, participation:null, attempts:[], realization:null, proof:null,
- witnessRequest:null, witness:null, recognition:null, share:null, opportunity:null,
- notifications:[], tuteurNote:null
-};
-const initial=()=>({
- ...structuredClone(blank),
- person:{name:"Amina N.",age:19,city:"Yaoundé"},
- actors:{organisation:"TalentBridge Africa",tuteur:"Paul M.",temoin:"Paul M.",partner:"Entreprise X"}
-});
+(() => {
+const KEY='cds_v18_state';
+const initial={space:'organisation',stage:1,challenge:null,participation:null,attempts:[],realization:null,proof:null,witnessRequest:null,witness:null,recognition:null,share:null,opportunity:null,tutorNote:'',log:[]};
 let db=load();
-const W=document.getElementById("workspace");
-function load(){try{const x=JSON.parse(localStorage.getItem(KEY));return x||initial()}catch{return initial()}}
-function save(){localStorage.setItem(KEY,JSON.stringify(db));}
-function esc(s){return String(s??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]));}
-function log(actor,msg){db.notifications.unshift({time:new Date().toLocaleTimeString("fr-FR"),actor,msg});}
-function pct(){return Math.min(100,Math.round((db.stage/10)*100));}
-function caps(){return db.challenge?.capacities||[];}
-function criteria(){return db.challenge?.criteria||[];}
-function status(t,kind=""){return `<span class="pill ${kind}">${esc(t)}</span>`;}
-function eventCard(title,msg){return `<div class="list-item"><span><b>${esc(title)}</b><br><span class="muted">${esc(msg)}</span></span></div>`;}
-function header(k,t,s){return `<div class="page-head"><div><div class="label">${k}</div><h1>${t}</h1><p>${s}</p></div><div class="scenario-progress"><span>${pct()}%</span><div><i style="width:${pct()}%"></i></div><small>progression du scénario</small></div></div>`;}
-function journey(){
- const a=[
-  ["Défi",!!db.challenge],["Participation",!!db.participation],["Tentative",db.attempts.length>0],
-  ["Réalisation",!!db.realization],["Preuve",!!db.proof],["Témoignage",!!db.witness],
-  ["Reconnaissance",!!db.recognition],["Partage",!!db.share],["Opportunité",!!db.opportunity],["Nouveau défi",db.stage>=10]
- ];
- return `<div class="flow">${a.map((x,i)=>`<div class="${x[1]?'on':''} ${i===db.stage?'current':''}"><span>${String(i+1).padStart(2,"0")}</span><b>${x[0]}</b></div>`).join("")}</div>`;
-}
-function cardGrid(content){return `<div class="cards">${content}</div>`}
-function saveRender(space){save();render(space);}
-document.querySelectorAll(".space").forEach(b=>b.addEventListener("click",()=>{
- document.querySelectorAll(".space").forEach(x=>x.classList.remove("active"));b.classList.add("active");render(b.dataset.space);
-}));
-document.getElementById("reset").addEventListener("click",()=>{
- const ok=window.confirm("Réinitialiser toute la simulation ? Cette action efface uniquement l’état de la démo CDS.");
- if(!ok)return;
- localStorage.removeItem(KEY);
- db=initial();
- save();
- document.querySelectorAll(".space").forEach(x=>x.classList.remove("active"));
- document.querySelector('[data-space="organisation"]').classList.add("active");
- render("organisation");
- window.scrollTo({top:0,behavior:"smooth"});
-});
-function render(space){({organisation,titulaire,tuteur,temoin,partenaire,admin}[space]||organisation)();}
-
+const W=document.getElementById('workspace');
+const $=s=>document.querySelector(s);
+function load(){try{return {...initial,...JSON.parse(localStorage.getItem(KEY)||'{}')}}catch{return {...initial}}}
+function save(){localStorage.setItem(KEY,JSON.stringify(db))}
+function esc(v=''){return String(v).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]))}
+function L(fr,en){return window.CDS_t?window.CDS_t(fr,en):fr}
+function log(actor,fr,en){db.log.push({actor,text:L(fr,en),at:new Date().toLocaleTimeString()});}
+function status(fr,en){return `<span class="pill green">${L(fr,en)}</span>`}
+function header(kicker,title,lead){return `<div class="page-head"><div><div class="label">${L(kicker.split('|')[0],kicker.split('|')[1]||kicker.split('|')[0])}</div><h1>${L(title.split('|')[0],title.split('|')[1]||title.split('|')[0])}</h1><p>${L(lead.split('|')[0],lead.split('|')[1]||lead.split('|')[0])}</p></div><div class="page-context">${status(stageLabel(db.stage).fr,stageLabel(db.stage).en)}</div></div>`}
+function stageLabel(n){const a=[['',''],['Défi','Challenge'],['Participation','Participation'],['Tentative','Attempt'],['Réalisation','Realization'],['Preuve','Evidence'],['Témoignage','Testimony'],['Reconnaissance','Recognition'],['Partage','Sharing'],['Opportunité','Opportunity'],['Nouveau défi','New challenge']];const x=a[n]||a[1];return {fr:x[0],en:x[1]}}
+function journey(){const items=[['01','Défi','Challenge',!!db.challenge],['02','Participation','Participation',!!db.participation],['03','Tentative','Attempt',db.attempts.length>0],['04','Réalisation','Realization',!!db.realization],['05','Preuve','Evidence',!!db.proof],['06','Témoignage','Testimony',!!db.witness],['07','Reconnaissance','Recognition',!!db.recognition],['08','Partage','Sharing',!!db.share],['09','Opportunité','Opportunity',!!db.opportunity],['10','Nouveau défi','New challenge',db.stage>=10]];return `<div class="journey-mini">${items.map(([n,fr,en,on])=>`<div class="jstep ${on?'done':''} ${db.stage==+n?'current':''}"><b>${n}</b><span>${L(fr,en)}</span></div>`).join('')}</div>`}
+function cardGrid(html){return `<div class="cards">${html}</div>`}
+function reset(){db={...initial,log:[]};save();render('organisation')}
 function organisation(){
- if(!db.challenge){
- W.innerHTML=header("ÉTAPE 01 · ENVIRONNEMENT","Formaliser un besoin puis publier un défi",
- "Le premier acte CDS part d'un besoin réel. L'organisation transforme ce besoin en situation d'action avec des conditions observables.")+journey()+cardGrid(`
- <div class="card wide">
- <div class="label">FORMALISATION DU BESOIN</div>
- <form id="challengeForm">
-  <label>Besoin / problème à traiter</label><textarea name="need" required placeholder="Ex. Les activités d'une association de quartier sont mal documentées et les responsables perdent du temps à consolider les informations."></textarea>
-  <div class="two">
-   <div><label>Contexte / environnement</label><textarea name="environment" required placeholder="Public concerné, lieu, contraintes, acteurs..."></textarea></div>
-   <div><label>Résultat attendu</label><textarea name="goal" required placeholder="Ce qui devra être produit, amélioré ou rendu observable."></textarea></div>
-  </div>
-  <label>Titre du défi</label><input name="title" required placeholder="Ex. Structurer le suivi d'une activité communautaire">
-  <label>Capacités explorées</label><div class="chips-form">
-   ${["Planifier","Analyser","Communiquer","Collaborer","Résoudre un problème","Rendre compte"].map(x=>`<label><input type="checkbox" name="cap" value="${x}"> ${x}</label>`).join("")}
-  </div>
-  <div class="two">
-   <div><label>Critères observables</label><textarea name="criteria" required placeholder="Un critère par ligne. Ex. planning exploitable, participants mobilisés, imprévus traités..."></textarea></div>
-   <div><label>Ressources promises</label><textarea name="resources" required placeholder="Accompagnement, temps, matériel, budget, accès aux personnes..."></textarea></div>
-  </div>
-  <label>Échéance</label><input name="deadline" type="date" required>
-  <button class="action">Formaliser et publier le défi</button>
- </form>
- </div>`);}
- else {
- const c=db.challenge;
- if(db.witness?.confirmed && !db.recognition){
-  W.innerHTML=header("ÉTAPE 07 · ORGANISATION","Émettre la reconnaissance", "Le témoignage confirme un élément vérifiable. L'organisation décide maintenant si la réalisation répond aux critères du défi.")+journey()+cardGrid(`<div class="card wide"><div class="notice"><b>Réalisation :</b> ${esc(db.realization?.summary||"")}<br><b>Preuve :</b> ${esc(db.proof?.ref||"")}<br><b>Témoignage :</b> ${esc(db.witness?.text||"")}</div><form id="recognitionForm"><label>Reconnaissance</label><textarea name="text" required>Reconnaissance de la réalisation du défi « ${esc(c.title)} » et des capacités mobilisées : ${esc(caps().join(", "))}.</textarea><button class="action">Émettre la reconnaissance</button></form></div>`);
-  document.getElementById("recognitionForm")?.addEventListener("submit",e=>{e.preventDefault();const d=new FormData(e.target);db.recognition={text:d.get("text"),level:"confirmée",by:db.actors.organisation,at:new Date().toISOString()};log(db.actors.organisation,"Reconnaissance émise après témoignage.");db.stage=Math.max(db.stage,7);saveRender("organisation")});
-  return;
- }
- W.innerHTML=header("ÉTAPE 01 · ENVIRONNEMENT","Le défi est publié",
- "Le besoin a été formalisé. Les acteurs peuvent maintenant faire vivre le même objet dans leurs espaces.")+journey()+cardGrid(`
- <div class="card wide"><div class="label">DÉFI PUBLIÉ</div><h3>${esc(c.title)}</h3><p>${esc(c.goal)}</p>
- <div class="notice"><b>Besoin :</b> ${esc(c.need)}<br><b>Contexte :</b> ${esc(c.environment)}</div>
- <div class="list">${c.criteria.map(x=>`<div class="list-item"><span>${esc(x)}</span>${status("critère")}</div>`).join("")}</div></div>
- <div class="card"><h3>Capacités explorées</h3><p>${caps().map(esc).join(" · ")}</p></div>
- <div class="card"><h3>Ressources</h3><p>${c.resources.map(esc).join(" · ")}</p><p class="muted">Échéance : ${esc(c.deadline)}</p></div>
- <div class="card full"><div class="success">✓ Défi publié. Passez dans <b>Amina</b> pour le recevoir et participer.</div><button class="action" id="goAmina">Ouvrir l’espace d’Amina</button></div>`);
- }
- const f=document.getElementById("challengeForm");
- f?.addEventListener("submit",e=>{
-  e.preventDefault();const d=new FormData(f);
-  db.challenge={title:d.get("title"),need:d.get("need"),environment:d.get("environment"),goal:d.get("goal"),
-   capacities:d.getAll("cap"),criteria:d.get("criteria").split(/\n+/).map(x=>x.trim()).filter(Boolean),
-   resources:d.get("resources").split(/\n+/).map(x=>x.trim()).filter(Boolean),deadline:d.get("deadline"),publishedAt:new Date().toISOString()};
-  log("TalentBridge","Besoin formalisé et défi publié.");db.stage=1;saveRender("organisation");
- });
- document.getElementById("goAmina")?.addEventListener("click",()=>render("titulaire"));
+ let body;
+ if(db.witness?.confirmed && !db.recognition){body=`<div class="card wide"><div class="label">${L('ACTION À FAIRE','NEXT ACTION')}</div><h3>${L('Reconnaître l’expérience dans son contexte','Recognize the experience in its context')}</h3><p>${L('Le témoignage confirme une observation précise. L’organisation décide séparément ce qu’elle reconnaît.','The testimony confirms a specific observation. The organization separately decides what it recognizes.')}</p><div class="notice"><b>${esc(db.challenge?.title||'Défi')}</b><br>${L('Réalisation','Realization')}: ${esc(db.realization?.summary||'')}<br>${L('Témoin','Witness')}: Paul</div><form id="recognitionForm"><label>${L('Texte de reconnaissance','Recognition statement')}</label><textarea name="text" required>${L('Reconnaissance de la réalisation dans le cadre du défi.','Recognition of the realization within the challenge context.')}</textarea><button class="action">${L('Émettre la reconnaissance','Issue recognition')}</button></form></div>`}
+ else if(!db.challenge){body=`<div class="card wide"><div class="label">${L('CRÉER UNE EXPÉRIENCE','CREATE AN EXPERIENCE')}</div><h3>${L('Commencer par un vrai besoin','Start with a real need')}</h3><p>${L('L’organisation décrit une situation réelle, les moyens disponibles, l’échéance et les éléments observables.','The organization describes a real situation, available resources, deadline and observable criteria.')}</p><form id="challengeForm"><label>${L('Titre du défi','Challenge title')}</label><input name="title" required value="Organiser une activité communautaire pilote"><label>${L('Contexte','Context')}</label><textarea name="context" required>Une association locale prépare une activité pour 40 jeunes. L’organisation doit coordonner les participants, le lieu et le déroulement avec des ressources limitées.</textarea><div class="two"><div><label>${L('Moyens disponibles','Available resources')}</label><input name="resources" required value="Équipe de 3 personnes · budget 75 000 FCFA · 10 jours"></div><div><label>${L('Échéance','Deadline')}</label><input name="deadline" required value="10 jours"></div></div><label>${L('Ce qui sera observable','What will be observable')}</label><textarea name="criteria" required>Planification, coordination, adaptation aux imprévus, déroulement effectif et retour des participants.</textarea><button class="action">${L('Formaliser et publier le défi','Formalize and publish challenge')}</button></form></div>`}
+ else if(!db.participation){body=`<div class="card wide"><div class="label">${L('DÉFI PUBLIÉ','PUBLISHED CHALLENGE')}</div><h3>${esc(db.challenge.title)}</h3><p>${esc(db.challenge.context)}</p><div class="notice"><b>${L('Moyens','Resources')}:</b> ${esc(db.challenge.resources)} · <b>${L('Échéance','Deadline')}:</b> ${esc(db.challenge.deadline)}<br><b>${L('Observable','Observable')}:</b> ${esc(db.challenge.criteria)}</div><button class="action" id="openAmina">${L('Ouvrir l’espace d’Amina','Open Amina’s space')}</button></div>`}
+ else {body=`<div class="card wide"><div class="label">${L('PARCOURS EN COURS','JOURNEY IN PROGRESS')}</div><h3>${esc(db.challenge.title)}</h3><p>${L('Amina a participé. L’organisation intervient maintenant pour observer et reconnaître ce qui est effectivement réalisé.','Amina has joined. The organization now observes and recognizes what is actually achieved.')}</p><div class="timeline">${db.log.slice(-8).reverse().map(e=>`<div class="event"><b>${esc(e.actor)}</b><p>${esc(e.text)}</p><small>${e.at}</small></div>`).join('')}</div></div>`}
+ W.innerHTML=header('ORGANISATION|ORGANIZATION','Créer les conditions d’une expérience réelle|Create the conditions for a real experience','Un défi contextualisé, puis une reconnaissance distincte du témoignage.|A contextualized challenge, followed by recognition distinct from testimony.')+journey()+cardGrid(body);
+ $('#challengeForm')?.addEventListener('submit',e=>{e.preventDefault();const d=new FormData(e.target);db.challenge={title:d.get('title'),context:d.get('context'),resources:d.get('resources'),deadline:d.get('deadline'),criteria:d.get('criteria')};db.stage=1;log('Organisation','Défi formalisé et publié.','Challenge formalized and published.');save();render('organisation')});
+ $('#openAmina')?.addEventListener('click',()=>render('titulaire'));
+ $('#recognitionForm')?.addEventListener('submit',e=>{e.preventDefault();const d=new FormData(e.target);db.recognition={text:d.get('text'),by:'TalentBridge'};db.stage=7;log('Organisation','Reconnaissance contextualisée émise.','Contextualized recognition issued.');save();render('organisation')});
 }
-
-function titulaire(){
- const c=db.challenge;
- if(!c){W.innerHTML=header("ÉTAPE 02 · TITULAIRE","Amina","En attente d'un défi.")+journey()+`<div class="notice">TalentBridge n'a encore rien publié. Ouvrez l'espace Organisation pour commencer.</div>`;return;}
- let main;
- if(!db.participation){
-   main=`<div class="notice"><b>Action 1 — Décider de participer.</b><br>Le défi présente son besoin, son contexte, ses critères et ses ressources avant toute participation.</div><button class="action" id="join">Accepter de participer</button>`;
- } else if(!db.attempts.length || (db.attempts.at(-1)?.outcome === "partial" && !db.realization)) {
-   main=attemptInterface();
- } else if(!db.realization){
-   main=realizationInterface();
- } else if(!db.proof){
-   main=proofInterface();
- } else if(!db.witnessRequest){
-   main=`<div class="success">✓ Réalisation et preuve préparées.</div><p><b>Action suivante — demander un témoignage.</b> Choisissez une personne habilitée à confirmer ce qu'elle peut réellement vérifier.</p><button class="action" id="requestWitness">Demander un témoignage à Paul</button>`;
- } else if(!db.witness){
-   main=`<div class="notice"><b>En attente du témoin.</b><br>La demande a été envoyée à Paul. Passez dans son espace pour poursuivre la simulation.</div><button class="action" id="goWitness">Ouvrir l'espace du témoin</button>`;
- } else if(!db.recognition){
-   main=`<div class="success">✓ Témoignage confirmé.</div><p><b>Action suivante — reconnaissance.</b> Le témoignage n'est pas encore une reconnaissance. L'organisation doit maintenant émettre la reconnaissance contextualisée.</p><button class="action" id="goOrganisation">Ouvrir l'espace de l'organisation</button>`;
- } else if(!db.share){
-   main=shareInterface();
- } else {
-   main=`<div class="success">✓ Partage autorisé.</div><p><b>Action suivante — opportunité.</b> Entreprise X peut maintenant consulter uniquement la sélection autorisée.</p><button class="action" id="goPartner">Ouvrir l'espace du partenaire</button>`;
- }
- W.innerHTML=header("ESPACE · TITULAIRE","Amina — agir, itérer, documenter, partager",
- "Ici, Amina ne consulte pas seulement son profil : elle accomplit les actions qui font progresser le cycle CDS.")+journey()+cardGrid(`
- <div class="card wide"><div class="person-line"><div class="initial">A</div><div><b>${esc(db.person.name)}</b><div class="muted">${db.person.age} ans · ${db.person.city}</div></div></div>
- <div class="divider"></div><div class="label">DÉFI REÇU</div><h3>${esc(c.title)}</h3><p>${esc(c.goal)}</p>
- <div class="action-panel">${main}</div></div>
- <div class="card"><h3>Contexte</h3><p>${esc(c.environment)}</p><h3>Critères observables</h3><div class="list">${c.criteria.map(x=>`<div class="list-item"><span>${esc(x)}</span>${status("attendu")}</div>`).join("")}</div></div>
- <div class="card"><h3>Capacités explorées</h3><p>${caps().map(esc).join(" · ")}</p><h3>Ressources</h3><p>${c.resources.map(esc).join(" · ")}</p></div>
- <div class="card full"><h3>Historique du parcours</h3>${db.attempts.length?db.attempts.map((a,i)=>eventCard("Tentative "+(i+1),`${a.result}${a.outcome==="partial"?" · itération nécessaire":" · passage à la réalisation"}`)).join(""):eventCard("En attente","Aucune tentative enregistrée : l'action suivante est définie dans le panneau ci-dessus.")}</div>`);
- document.getElementById("join")?.addEventListener("click",()=>{db.participation={at:new Date().toISOString()};db.stage=Math.max(db.stage,2);log("Amina","Participation acceptée.");saveRender("titulaire")});
- document.getElementById("attemptForm")?.addEventListener("submit",e=>{
-   e.preventDefault();const d=new FormData(e.target),a={plan:d.get("plan"),success:d.get("success"),result:d.get("result"),participants:Number(d.get("participants")),outcome:d.get("outcome"),at:new Date().toISOString()};
-   db.attempts.push(a);log("Amina",`Tentative ${db.attempts.length} enregistrée : ${a.outcome==="partial"?"itération nécessaire":"résultat satisfaisant"}.`);
-   if(a.outcome==="complete"){db.stage=Math.max(db.stage,3)} else {db.stage=Math.max(db.stage,2)}
-   saveRender("titulaire");
- });
- document.getElementById("realizationForm")?.addEventListener("submit",e=>{e.preventDefault();const d=new FormData(e.target);db.realization={summary:d.get("summary"),learning:d.get("learning"),attempts:db.attempts.length};log("Amina","Réalisation finale documentée.");db.stage=Math.max(db.stage,4);saveRender("titulaire")});
- document.getElementById("proofForm")?.addEventListener("submit",e=>{e.preventDefault();const d=new FormData(e.target);db.proof={type:d.get("type"),ref:d.get("ref"),description:d.get("description")};log("Amina","Preuve associée à la réalisation.");db.stage=Math.max(db.stage,5);saveRender("titulaire")});
- document.getElementById("requestWitness")?.addEventListener("click",()=>{db.witnessRequest={from:"Amina",to:"Paul",at:new Date().toISOString()};log("Amina","Demande de témoignage envoyée à Paul.");db.stage=Math.max(db.stage,6);saveRender("titulaire")});
- document.getElementById("goWitness")?.addEventListener("click",()=>render("temoin"));
- document.getElementById("goOrganisation")?.addEventListener("click",()=>render("organisation"));
- document.getElementById("shareForm")?.addEventListener("submit",e=>{e.preventDefault();const d=new FormData(e.target);db.share={recipient:"Entreprise X",items:d.getAll("item"),at:new Date().toISOString()};log("Amina","Partage sélectif autorisé.");db.stage=Math.max(db.stage,8);saveRender("titulaire")});
- document.getElementById("goPartner")?.addEventListener("click",()=>render("partenaire"));
+function titulaire(){let body='';
+ if(!db.challenge) body=`<div class="card full"><div class="notice">${L('Aucun défi n’est encore publié. Passez par l’espace Organisation.','No challenge has been published yet. Open Organization space first.')}</div></div>`;
+ else if(!db.participation) body=`<div class="card wide"><div class="label">${L('RÉCEPTION','RECEPTION')}</div><h3>${esc(db.challenge.title)}</h3><p>${esc(db.challenge.context)}</p><div class="notice"><b>${L('Ce qui compte','What matters')}:</b> ${L('le contexte, les actions, la réalisation et les preuves — pas une note.','context, actions, realization and evidence — not a score.')}</div><button class="action" id="accept">${L('Accepter le défi','Accept challenge')}</button></div>`;
+ else if(!db.realization) body=`<div class="card wide">${attemptInterface()}</div>`;
+ else if(!db.proof) body=`<div class="card wide">${realizationInterface()}${proofInterface()}</div>`;
+ else if(!db.witnessRequest) body=`<div class="card wide">${proofInterface()}<div class="success">✓ ${L('Réalisation et preuve enregistrées.','Realization and evidence recorded.')}</div><button class="action" id="requestWitness">${L('Demander un témoignage','Request testimony')}</button></div>`;
+ else if(!db.witness) body=`<div class="card wide"><div class="notice">${L('La demande de témoignage est envoyée à Paul. Vous pouvez consulter l’avancement depuis les autres espaces.','The testimony request was sent to Paul. You can follow progress from the other spaces.')}</div><button class="outline" id="goWitness">${L('Ouvrir l’espace Témoin','Open Witness space')}</button></div>`;
+ else if(db.witness && !db.recognition) body=`<div class="card wide"><div class="success">✓ ${L('Témoignage confirmé.','Testimony confirmed.')}</div><p>${esc(db.witness.text)}</p><button class="action" id="goOrganisation">${L('Passer à la reconnaissance organisationnelle','Open organization recognition')}</button></div>`;
+ else if(!db.share) body=`<div class="card wide"><div class="label">${L('CONTRÔLE DU PARTAGE','SHARING CONTROL')}</div><h3>${L('Vous choisissez ce que le partenaire peut voir.','You choose what the partner can see.')}</h3><form id="shareForm">${['Contexte du défi|Challenge context','Réalisation|Realization','Preuve|Evidence','Témoignage|Testimony','Reconnaissance|Recognition'].map((x,i)=>{const [fr,en]=x.split('|');return `<label class="check"><input type="checkbox" name="item" value="${fr}" checked> ${L(fr,en)}</label>`}).join('')}<button class="action">${L('Autoriser le partage sélectionné','Allow selected sharing')}</button></form></div>`;
+ else body=`<div class="card wide"><div class="success">✓ ${L('Partage autorisé.','Sharing authorized.')}</div><p>${L('Le partenaire reçoit uniquement la sélection autorisée.','The partner receives only the authorized selection.')}</p><button class="action" id="goPartner">${L('Ouvrir l’espace Partenaire','Open Partner space')}</button></div>`;
+ W.innerHTML=header('AMINA|AMINA','Construire une expérience, pas un score|Build an experience, not a score','Amina documente ce qu’elle fait et contrôle ce qu’elle partage.|Amina documents what she does and controls what she shares.')+journey()+cardGrid(body);
+ $('#accept')?.addEventListener('click',()=>{db.participation={at:new Date().toISOString()};db.stage=2;log('Amina','Participation acceptée.','Participation accepted.');save();render('titulaire')});
+ $('#requestWitness')?.addEventListener('click',()=>{db.witnessRequest={to:'Paul'};db.stage=6;log('Amina','Demande de témoignage envoyée à Paul.','Testimony request sent to Paul.');save();render('titulaire')});
+ $('#goWitness')?.addEventListener('click',()=>render('temoin'));$('#goOrganisation')?.addEventListener('click',()=>render('organisation'));$('#goPartner')?.addEventListener('click',()=>render('partenaire'));
+ $('#shareForm')?.addEventListener('submit',e=>{e.preventDefault();const d=new FormData(e.target);db.share={items:d.getAll('item')};db.stage=8;log('Amina','Partage sélectif autorisé.','Selective sharing authorized.');save();render('titulaire')});
+ bindAttempt();bindProof();
 }
-
-function attemptInterface(){
- const n=db.attempts.length;
- return `<div class="notice ${n&&db.attempts[n-1].outcome==="partial"?"warning":""}"><b>${n?"Nouvelle itération":"Première tentative"}</b><br>
- Une tentative produit des informations : plan, action, résultat, difficultés et apprentissages. L'échec n'est pas converti en note.</div>
- <form id="attemptForm"><div class="two"><div><label>Plan d'action</label><textarea name="plan" required placeholder="Étapes, personnes mobilisées, ordre des actions..."></textarea></div>
- <div><label>Comment saurai-je que cela fonctionne ?</label><textarea name="success" required placeholder="Signes ou résultats observables..."></textarea></div></div>
- <label>Ce qui s'est réellement passé</label><textarea name="result" required placeholder="Décrire les faits, y compris les difficultés rencontrées."></textarea>
- <div class="two"><div><label>Participants impliqués</label><input name="participants" type="number" min="1" required placeholder="18"></div>
- <div><label>Issue de la tentative</label><select name="outcome"><option value="partial">Partiellement aboutie — analyser et recommencer</option><option value="complete">Aboutie — passer à la réalisation</option></select></div></div>
- <button class="action">Enregistrer la tentative</button></form>`;
-}
-function realizationInterface(){return `<div class="notice"><b>Action 2 — Documenter la réalisation.</b> La dernière tentative est considérée comme suffisamment aboutie pour passer à la formalisation.</div>
-<div class="list">${db.attempts.map((a,i)=>eventCard("Tentative "+(i+1),`${a.result} · ${a.participants} participant(s)`)).join("")}</div>
-<form id="realizationForm"><label>Réalisation finale</label><textarea name="summary" required placeholder="Qu'est-ce qui a effectivement été produit, changé ou accompli ?"></textarea>
-<label>Ce qui a été appris ou amélioré</label><textarea name="learning" required placeholder="Méthodes, adaptation, collaboration, capacités mobilisées..."></textarea><button class="action">Documenter la réalisation</button></form>`}
-function proofInterface(){return `<div class="notice"><b>Action 3 — Ajouter une preuve.</b> La preuve doit être reliée à la réalisation et permettre à un tiers de vérifier un élément précis.</div>
-<div class="success">✓ Réalisation : ${esc(db.realization.summary)}</div>
-<form id="proofForm"><div class="label">PREUVE</div><label>Type</label><select name="type"><option>Livrable</option><option>Rapport</option><option>Trace d'activité</option><option>Observation</option></select><label>Référence</label><input name="ref" required placeholder="rapport-activité-001"><label>Ce que la preuve permet de vérifier</label><textarea name="description" required placeholder="Ex. le résultat obtenu, les données utilisées, les décisions prises..." ></textarea><button class="action">Ajouter la preuve</button></form>`}
-function shareInterface(){return `<div class="notice"><b>Action 4 — Contrôler le partage.</b> La reconnaissance est confirmée. Amina choisit précisément les éléments transmis à Entreprise X.</div><form id="shareForm"><label>Éléments à partager</label>${["Défi et contexte","Réalisation","Preuve","Témoignage","Reconnaissance"].map(x=>`<label class="check"><input type="checkbox" name="item" value="${x}" checked> ${x}</label>`).join("")}<br><button class="action">Autoriser le partage</button></form>`}
-
-
-
-function tuteur(){
- W.innerHTML=header("ÉTAPE 03 · ACCOMPAGNEMENT","Paul accompagne sans se substituer à la personne","Le tuteur documente le contexte d'accompagnement. Il ne transforme pas son observation en score.")+journey()+cardGrid(`
- <div class="card"><div class="muted">TUTEUR</div><div class="metric">Paul M.</div><p>Accompagnateur d'Amina.</p></div>
- <div class="card"><div class="muted">ÉTAT</div><div class="metric">${db.participation?"Actif":"En attente"}</div><p>${db.attempts.length?"Des tentatives existent.":"Amina n'a pas encore commencé."}</p></div>
- <div class="card wide"><h3>Observation d'accompagnement</h3><form id="tutorForm"><textarea name="note" placeholder="Ex. Amina a demandé un retour après la première tentative et a modifié la répartition des tâches.">${esc(db.tuteurNote||"")}</textarea><button class="action">Enregistrer l'observation</button></form>
- ${db.tuteurNote?`<div class="success">✓ Observation enregistrée : ${esc(db.tuteurNote)}</div>`:""}</div>`);
- document.getElementById("tutorForm")?.addEventListener("submit",e=>{e.preventDefault();db.tuteurNote=new FormData(e.target).get("note");log("Paul","Observation d'accompagnement enregistrée.");saveRender("tuteur")});
-}
-
-function temoin(){
- const ready=!!db.witnessRequest&&!!db.realization&&!!db.proof;
- W.innerHTML=header("ÉTAPE 06 · TÉMOIGNAGE","Paul vérifie une réalisation précise","Le témoignage ne porte pas sur la valeur de la personne. Il confirme ou ne confirme pas ce qui est vérifiable dans son périmètre.")+journey()+cardGrid(`
- <div class="card wide"><div class="label">DEMANDE DE TÉMOIGNAGE</div>
- ${!db.witnessRequest?`<div class="notice">Aucune demande. Amina doit d'abord documenter sa réalisation et demander un témoignage.</div>`:
- !ready?`<div class="notice">La demande existe, mais les éléments vérifiables ne sont pas encore complets.</div>`:
- db.witness?`<div class="success">✓ Témoignage ${db.witness.confirmed?"confirmé":"non confirmé"}.</div><p>${esc(db.witness.text||"")}</p>`:
- `<h3>${esc(db.challenge.title)}</h3><div class="notice"><b>Réalisation :</b> ${esc(db.realization.summary)}<br><b>Preuve :</b> ${esc(db.proof.type)} · ${esc(db.proof.ref)}<br>${esc(db.proof.description)}</div>
- <form id="witnessForm"><label>Observation vérifiable</label><textarea name="text" required placeholder="Ce que vous avez directement observé ou que vous pouvez vérifier."></textarea>
- <button class="action">Confirmer le témoignage</button><button type="button" class="outline" id="declineWitness">Je ne peux pas confirmer</button></form>`}</div>
- <div class="card"><h3>Règle</h3><p>Pas d'auto-attestation. Le témoin doit avoir une relation réelle avec la réalisation et agir dans son périmètre.</p></div>
- <div class="card"><h3>Après</h3><p>La confirmation permet à l'environnement d'émettre une reconnaissance contextualisée.</p></div>`);
- document.getElementById("witnessForm")?.addEventListener("submit",e=>{e.preventDefault();const d=new FormData(e.target);db.witness={confirmed:true,text:d.get("text"),by:"Paul"};log("Paul","Témoignage confirmé.");db.stage=Math.max(db.stage,7);saveRender("temoin")});
- document.getElementById("declineWitness")?.addEventListener("click",()=>{db.witness={confirmed:false,text:"Témoignage non confirmé."};log("Paul","Témoignage non confirmé.");db.stage=Math.max(4,db.stage-1);saveRender("temoin")});
-}
-
-function partenaire(){
- const visible=db.share;
- const sharedList=visible ? db.share.items.map(x=>`<div class="list-item"><span>${esc(x)}</span>${status("visible")}</div>`).join("") : "";
- const received=visible
-  ? `<div class="success">✓ Sélection partagée.</div>
-     <div class="list">${sharedList}</div>
-     ${db.recognition?`<div class="notice"><b>Reconnaissance :</b> ${esc(db.recognition.text)}</div>`:""}
-     ${!db.opportunity
-       ? `<form id="oppForm"><label>Opportunité proposée</label><input name="title" value="Mission pilote de coordination" required>
-          <label>Pourquoi cette proposition ?</label><textarea name="reason" required>Les éléments partagés montrent une réalisation contextualisée et vérifiée.</textarea>
-          <button class="action">Proposer l'opportunité</button></form>`
-       : `<div class="success">✓ Opportunité proposée : ${esc(db.opportunity.title)}</div>
-          <button class="action" id="next">Transformer l'opportunité en nouveau défi</button>`}`
-  : `<div class="notice">Amina n'a pas encore autorisé le partage.</div>`;
- W.innerHTML=header("ÉTAPE 09 · OPPORTUNITÉ","Entreprise X reçoit uniquement le carnet partagé","Le partenaire ne consulte pas automatiquement l'ensemble du parcours.")+
- journey()+cardGrid(`
- <div class="card"><div class="muted">ACCÈS</div><div class="metric">${visible?"Autorisé":"Fermé"}</div><p>${visible?"Sélection reçue d'Amina.":"Aucun accès par défaut."}</p></div>
- <div class="card"><div class="muted">RECONNAISSANCE</div><div class="metric">${db.recognition?"1":"0"}</div><p>${db.recognition?"Contextualisée.":"Non visible."}</p></div>
- <div class="card wide"><h3>Vue reçue</h3>${received}</div>`);
- document.getElementById("oppForm")?.addEventListener("submit",e=>{
-   e.preventDefault();const d=new FormData(e.target);
-   db.opportunity={title:d.get("title"),reason:d.get("reason")};
-   log("Entreprise X","Opportunité proposée.");db.stage=Math.max(db.stage,9);saveRender("partenaire");
- });
- document.getElementById("next")?.addEventListener("click",()=>{
-   db.stage=10;log("Système","L'opportunité devient le point de départ d'un nouveau défi.");saveRender("partenaire");
- });
-}
-function admin(){
- W.innerHTML=header("VUE TRANSVERSALE","Administration CDS","Observer les invariants et l'état du cycle sans attribuer de score à la personne.")+journey()+cardGrid(`
- <div class="card"><div class="muted">ÉTAT</div><div class="metric">${pct()}%</div><p>Un état partagé entre les espaces.</p></div>
- <div class="card"><div class="muted">TENTATIVES</div><div class="metric">${db.attempts.length}</div><p>Les itérations restent contextualisées.</p></div>
- <div class="card"><div class="muted">PREUVES</div><div class="metric">${db.proof?1:0}</div><p>Associées à une réalisation.</p></div>
- <div class="card"><div class="muted">RÈGLES</div><div class="metric">4</div><p>Pas d'auto-attestation · relation réelle · consentement · traçabilité.</p></div>
- <div class="card wide"><h3>Journal</h3>${db.notifications.length?db.notifications.map(x=>eventCard(`${x.time} · ${x.actor}`,x.msg)).join(""):eventCard("Système","Aucune action.")}</div>
- <div class="card wide"><h3>Invariants observables</h3><div class="list">
- <div class="list-item"><span>Défi issu d'un besoin formalisé</span>${status(db.challenge?"OK":"En attente")}</div>
- <div class="list-item"><span>Tentatives avant réalisation</span>${status(db.realization&&db.attempts.length?"OK":"En attente")}</div>
- <div class="list-item"><span>Preuve liée à une réalisation</span>${status(db.proof&&db.realization?"OK":"En attente")}</div>
- <div class="list-item"><span>Partage autorisé par Amina</span>${status(db.share?"OK":"En attente")}</div>
- </div></div>`);
-}
-
-/* Recognition is a separate organizational action: testimony != recognition. */
-function maybeRecognition(space){
- if(db.witness?.confirmed && !db.recognition){
-  db.recognition={text:`Reconnaissance de la réalisation du défi « ${db.challenge.title} » et des capacités mobilisées : ${caps().join(", ")}.`,level:"confirmée",by:db.actors.organisation};
-  log(db.actors.organisation,"Reconnaissance émise après confirmation du témoignage.");
-  db.stage=Math.max(db.stage,7); save(); return true;
- }
- return false;
-}
-render("organisation");
+function attemptInterface(){const n=db.attempts.length;return `<div class="label">${L('TENTATIVE','ATTEMPT')} ${n+1}</div><h3>${n?L('Recommencer avec les enseignements de la première tentative','Retry using what was learned from the first attempt'):L('Définir son plan puis agir','Define a plan, then act')}</h3><div class="notice">${L('Une tentative peut être partielle. L’échec devient une information pour la suite, pas une note sur la personne.','An attempt can be partial. Failure becomes information for what comes next, not a score on the person.')}</div><form id="attemptForm"><div class="two"><div><label>${L('Plan d’action','Action plan')}</label><textarea name="plan" required placeholder="Étapes, personnes, ordre des actions..." ></textarea></div><div><label>${L('Critères observables','Observable criteria')}</label><textarea name="success" required>${esc(db.challenge?.criteria||'')}</textarea></div></div><label>${L('Ce qui s’est réellement passé','What actually happened')}</label><textarea name="result" required placeholder="Faits, adaptations, difficultés, résultat..."></textarea><div class="two"><div><label>${L('Participants','Participants')}</label><input name="participants" type="number" min="1" value="18" required></div><div><label>${L('Issue','Outcome')}</label><select name="outcome"><option value="partial">${L('Partielle — recommencer','Partial — retry')}</option><option value="complete">${L('Aboutie — documenter la réalisation','Complete — document realization')}</option></select></div></div><button class="action">${L('Enregistrer la tentative','Save attempt')}</button></form>${db.attempts.length?`<div class="list"><b>${L('Tentatives précédentes','Previous attempts')}</b>${db.attempts.map((a,i)=>`<div class="list-item"><span>${L('Tentative','Attempt')} ${i+1} · ${esc(a.result)}</span>${status(a.outcome==='partial'?'Partielle':'Aboutie',a.outcome==='partial'?'Partial':'Complete')}</div>`).join('')}</div>`:''}`}
+function bindAttempt(){$('#attemptForm')?.addEventListener('submit',e=>{e.preventDefault();const d=new FormData(e.target);db.attempts.push({plan:d.get('plan'),success:d.get('success'),result:d.get('result'),participants:d.get('participants'),outcome:d.get('outcome')});db.stage=3;log('Amina',d.get('outcome')==='partial'?'Tentative partielle enregistrée. Elle peut recommencer.':'Tentative aboutie enregistrée.','Partial attempt recorded. She can retry.');save();render('titulaire')})}
+function realizationInterface(){return `<div class="label">${L('RÉALISATION','REALIZATION')}</div><h3>${L('Documenter ce qui a effectivement été accompli','Document what was actually accomplished')}</h3><p>${L('La réalisation n’est pas une note : c’est une description structurée de ce qui a changé, été produit ou appris.','A realization is not a score: it is a structured description of what changed, was produced or learned.')}</p><form id="realizationForm"><label>${L('Réalisation finale','Final realization')}</label><textarea name="summary" required placeholder="Ce qui a été produit, changé ou accompli..."></textarea><label>${L('Apprentissages / adaptations','Learning / adaptations')}</label><textarea name="learning" required placeholder="Ce qui a été appris, ajusté ou amélioré..."></textarea><button class="action">${L('Documenter la réalisation','Document realization')}</button></form>`}
+function proofInterface(){return `<div class="proof-box"><div class="label">${L('PREUVE','EVIDENCE')}</div><p>${L('Une preuve doit être reliée à une réalisation et permettre de vérifier un élément précis.','Evidence must be linked to a realization and make a specific element verifiable.')}</p><form id="proofForm"><label>${L('Type','Type')}</label><select name="type"><option>Livrable</option><option>Rapport</option><option>Trace d’activité</option><option>Observation</option></select><label>${L('Référence','Reference')}</label><input name="ref" required placeholder="rapport-activite-001"><label>${L('Ce que la preuve permet de vérifier','What the evidence verifies')}</label><textarea name="description" required></textarea><button class="action">${L('Ajouter la preuve','Add evidence')}</button></form></div>`}
+function bindProof(){$('#realizationForm')?.addEventListener('submit',e=>{e.preventDefault();const d=new FormData(e.target);db.realization={summary:d.get('summary'),learning:d.get('learning')};db.stage=4;log('Amina','Réalisation documentée.','Realization documented.');save();render('titulaire')});$('#proofForm')?.addEventListener('submit',e=>{e.preventDefault();const d=new FormData(e.target);db.proof={type:d.get('type'),ref:d.get('ref'),description:d.get('description')};db.stage=5;log('Amina','Preuve associée à la réalisation.','Evidence linked to realization.');save();render('titulaire')})}
+function tuteur(){W.innerHTML=header('TUTEUR|TUTOR','Accompagner sans évaluer|Support without grading','Le tuteur documente le contexte d’accompagnement sans attribuer de score.|The tutor documents support without assigning a score.')+journey()+cardGrid(`<div class="card"><div class="label">${L('ACCOMPAGNATEUR','TUTOR')}</div><div class="metric">Paul M.</div><p>${L('Accompagnateur d’Amina.','Amina’s support person.')}</p></div><div class="card wide"><h3>${L('Observation d’accompagnement','Support observation')}</h3><form id="tutorForm"><textarea name="note" placeholder="Ce que j’ai observé dans l’accompagnement..."></textarea><button class="action">${L('Enregistrer l’observation','Save observation')}</button></form>${db.tutorNote?`<div class="success">✓ ${esc(db.tutorNote)}</div>`:''}</div>`);$('#tutorForm')?.addEventListener('submit',e=>{e.preventDefault();db.tutorNote=new FormData(e.target).get('note');log('Paul','Observation d’accompagnement enregistrée.','Support observation recorded.');save();render('tuteur')})}
+function temoin(){const ready=!!db.witnessRequest&&!!db.realization&&!!db.proof;W.innerHTML=header('TÉMOIN|WITNESS','Confirmer ce qui a réellement été observé|Confirm what was actually observed','Le témoignage est limité au périmètre réel du témoin.|Testimony is limited to the witness’s actual scope.')+journey()+cardGrid(`<div class="card wide">${!db.witnessRequest?`<div class="notice">${L('Aucune demande de témoignage.','No testimony request.')}</div>`:!ready?`<div class="notice">${L('La demande existe mais les éléments vérifiables ne sont pas complets.','The request exists but verifiable elements are incomplete.')}</div>`:db.witness?`<div class="success">✓ ${db.witness.confirmed?L('Témoignage confirmé.','Testimony confirmed.'):L('Non confirmé.','Not confirmed.')}</div><p>${esc(db.witness.text)}</p>`:`<h3>${esc(db.challenge.title)}</h3><div class="notice"><b>${L('Réalisation','Realization')}:</b> ${esc(db.realization.summary)}<br><b>${L('Preuve','Evidence')}:</b> ${esc(db.proof.type)} · ${esc(db.proof.ref)}<br>${esc(db.proof.description)}</div><form id="witnessForm"><label>${L('Observation vérifiable','Verifiable observation')}</label><textarea name="text" required placeholder="Ce que vous avez directement observé..."></textarea><button class="action">${L('Confirmer le témoignage','Confirm testimony')}</button><button type="button" class="outline" id="declineWitness">${L('Je ne peux pas confirmer','I cannot confirm')}</button></form>`}</div><div class="card"><h3>${L('Règle','Rule')}</h3><p>${L('Pas d’auto-attestation. Le témoin doit avoir une relation réelle avec la réalisation.','No self-attestation. The witness must have a real relationship with the realization.')}</p></div>`);$('#witnessForm')?.addEventListener('submit',e=>{e.preventDefault();db.witness={confirmed:true,text:new FormData(e.target).get('text'),by:'Paul'};db.stage=7;log('Paul','Témoignage confirmé.','Testimony confirmed.');save();render('temoin')});$('#declineWitness')?.addEventListener('click',()=>{db.witness={confirmed:false,text:L('Témoignage non confirmé.','Testimony not confirmed.')};log('Paul','Témoignage non confirmé.','Testimony not confirmed.');save();render('temoin')})}
+function partenaire(){const visible=!!db.share;W.innerHTML=header('PARTENAIRE|PARTNER','Voir ce qui a été volontairement partagé|See what was intentionally shared','Le partenaire ne reçoit pas automatiquement tout le parcours.|The partner does not automatically receive the whole journey.')+journey()+cardGrid(`<div class="card"><div class="label">${L('ACCÈS','ACCESS')}</div><div class="metric">${visible?L('Autorisé','Allowed'):L('Fermé','Closed')}</div><p>${visible?L('Sélection reçue d’Amina.','Selection received from Amina.'):L('Aucun accès par défaut.','No default access.')}</p></div><div class="card wide"><h3>${L('Carnet partagé','Shared record')}</h3>${visible?`<div class="list">${db.share.items.map(x=>`<div class="list-item"><span>${L(x,x)}</span>${status('visible','visible')}</div>`).join('')}</div>${db.recognition?`<div class="notice"><b>${L('Reconnaissance','Recognition')}:</b> ${esc(db.recognition.text)}</div>`:''}${!db.opportunity?`<form id="oppForm"><label>${L('Opportunité proposée','Proposed opportunity')}</label><input name="title" value="Mission pilote de coordination" required><label>${L('Pourquoi cette proposition ?','Why this proposal?')}</label><textarea name="reason" required>${L('Les éléments partagés montrent une expérience contextualisée qui peut être pertinente pour cette mission.','The shared elements show a contextualized experience that may be relevant to this mission.')}</textarea><button class="action">${L('Proposer l’opportunité','Propose opportunity')}</button></form>`:`<div class="success">✓ ${esc(db.opportunity.title)}</div><button class="action" id="next">${L('Créer un nouveau défi','Create a new challenge')}</button>`}`:`<div class="notice">${L('Amina n’a pas encore autorisé le partage.','Amina has not yet authorized sharing.')}</div>`}</div>`);$('#oppForm')?.addEventListener('submit',e=>{e.preventDefault();const d=new FormData(e.target);db.opportunity={title:d.get('title'),reason:d.get('reason')};db.stage=9;log('Entreprise X','Opportunité proposée.','Opportunity proposed.');save();render('partenaire')});$('#next')?.addEventListener('click',()=>{db.stage=10;log('Entreprise X','Une nouvelle expérience peut commencer.','A new experience can begin.');save();render('organisation')})}
+function admin(){W.innerHTML=header('ADMINISTRATION|ADMINISTRATION','Gouverner les règles, pas la valeur des personnes|Govern the rules, not people’s value','Vue de gouvernance : habilitations, partage, preuves et journal d’événements.|Governance view: permissions, sharing, evidence and event log.')+journey()+cardGrid(`<div class="card"><div class="label">${L('INVARIANTS','INVARIANTS')}</div><p>✓ ${L('Pas d’auto-attestation','No self-attestation')}<br>✓ ${L('Témoin dans son périmètre','Witness within scope')}<br>✓ ${L('Preuve liée à une réalisation','Evidence linked to realization')}<br>✓ ${L('Partage autorisé par la personne','Sharing authorized by the person')}</p></div><div class="card wide"><h3>${L('Journal','Event log')}</h3><div class="timeline">${db.log.length?db.log.slice().reverse().map(e=>`<div class="event"><b>${esc(e.actor)}</b><p>${esc(e.text)}</p><small>${e.at}</small></div>`).join(''):`<p>${L('Aucun événement.','No events.')}</p>`}</div></div>`)}
+function render(space=db.space){db.space=space;save();document.querySelectorAll('.space').forEach(b=>b.classList.toggle('active',b.dataset.space===space));({organisation,titulaire,tuteur,temoin,partenaire,admin}[space]||organisation)();if(window.CDS_apply){window.CDS_apply(document)} }
+document.querySelectorAll('.space').forEach(b=>b.addEventListener('click',()=>render(b.dataset.space)));$('#reset')?.addEventListener('click',()=>{if(confirm(L('Réinitialiser toute la simulation ? Cette action efface uniquement les données de la démo.','Reset the whole simulation? This only clears demo data.')))reset()});
+render(db.space||'organisation');
+})();
+document.addEventListener('cds:language',()=>{ if(typeof render==='function') render(db.space||'organisation'); });
